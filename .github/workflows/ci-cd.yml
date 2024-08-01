@@ -84,6 +84,8 @@ jobs:
         tags: |
           ${{ env.DOCKER_IMAGE }}:${{ github.sha }}
           ${{ env.DOCKER_IMAGE }}:latest
+        build-args: |
+          NO_CACHE=true
   update-argocd-repo:
     needs: build-and-push
     runs-on: ubuntu-latest
