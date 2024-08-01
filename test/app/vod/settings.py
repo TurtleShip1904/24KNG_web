@@ -1,15 +1,24 @@
 import os
 from pathlib import Path
-from db_config import db_config
 
+# DB 설정 서브모듈 임포트 시도
+try:
+    from db_config import db_config
+except ImportError:
+    raise ImportError("DB configuration not found. Make sure the submodule is properly initialized.")
+
+# Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+# SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-c&ktho*@h)&)kuf!ks)&af5wwsvfn&l)lp2z_of5!d$9%@s-7)')
 
-DEBUG = True
+# SECURITY WARNING: don't run with debug turned on in production!
+DEBUG = os.environ.get('DEBUG', 'False') == 'True'
 
 ALLOWED_HOSTS = ['*']
 
+# Application definition
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -50,34 +59,48 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'vod.wsgi.application'
 
+# Database
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': db_config.DB_NAME,
-        'USER': db_config.DB_USER,
-        'PASSWORD': db_config.DB_PASSWORD,
-        'HOST': db_config.DB_HOST,
-        'PORT': db_config.DB_PORT,
+        'NAME': os.environ.get('DB_NAME', db_config.DB_NAME),
+        'USER': os.environ.get('DB_USER', db_config.DB_USER),
+        'PASSWORD': os.environ.get('DB_PASSWORD', db_config.DB_PASSWORD),
+        'HOST': os.environ.get('DB_HOST', db_config.DB_HOST),
+        'PORT': os.environ.get('DB_PORT', db_config.DB_PORT),
     }
 }
 
+# Password validation
 AUTH_PASSWORD_VALIDATORS = [
-    {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',},
-    {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',},
-    {'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',},
-    {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',},
+    {
+        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+    },
+    {
+        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+    },
+    {
+        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+    },
+    {
+        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+    },
 ]
 
+# Internationalization
 LANGUAGE_CODE = 'ko-kr'
 TIME_ZONE = 'Asia/Seoul'
 USE_I18N = True
 USE_L10N = True
 USE_TZ = True
 
+# Static files (CSS, JavaScript, Images)
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
+# Media files
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
+# Default primary key field type
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
