@@ -1,9 +1,6 @@
 import os
 from pathlib import Path
-from dotenv import load_dotenv
-
-# .env 파일 로드
-load_dotenv()
+from db_config import db_config
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -56,11 +53,11 @@ WSGI_APPLICATION = 'vod.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': os.getenv('DB_NAME'),
-        'USER': os.getenv('DB_USER'),
-        'PASSWORD': os.getenv('DB_PASSWORD'),
-        'HOST': os.getenv('DB_HOST'),
-        'PORT': os.getenv('DB_PORT', '3306'),
+        'NAME': db_config.DB_NAME,
+        'USER': db_config.DB_USER,
+        'PASSWORD': db_config.DB_PASSWORD,
+        'HOST': db_config.DB_HOST,
+        'PORT': db_config.DB_PORT,
     }
 }
 
