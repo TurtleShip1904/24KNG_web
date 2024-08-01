@@ -1,5 +1,6 @@
 import os
 from pathlib import Path
+from db_config import db_config
 
 # DB 설정 서브모듈 임포트 시도
 try:
@@ -63,14 +64,13 @@ WSGI_APPLICATION = 'vod.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': os.environ.get('DB_NAME', db_config.DB_NAME),
-        'USER': os.environ.get('DB_USER', db_config.DB_USER),
-        'PASSWORD': os.environ.get('DB_PASSWORD', db_config.DB_PASSWORD),
-        'HOST': os.environ.get('DB_HOST', db_config.DB_HOST),
-        'PORT': os.environ.get('DB_PORT', db_config.DB_PORT),
+        'NAME': db_config.DB_NAME,
+        'USER': db_config.DB_USER,
+        'PASSWORD': db_config.DB_PASSWORD,
+        'HOST': db_config.DB_HOST,
+        'PORT': db_config.DB_PORT,
     }
 }
-
 # Password validation
 AUTH_PASSWORD_VALIDATORS = [
     {
