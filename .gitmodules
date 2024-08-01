@@ -1,0 +1,3 @@
+[submodule "test/app/db_config"]
+	path = test/app/db_config
+	url = https://github.com/TurtleShip1904/24KNG_sub.git
